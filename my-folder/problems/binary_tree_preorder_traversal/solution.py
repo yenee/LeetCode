@@ -5,17 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def preorder(self, root, answerList):
-        # 儲存val -> left -> right
-        # 走到底時回傳answerList
-        if root == None : 
-            return answerList
-        else :
-            answerList.append(root.val)
-            self.preorder(root.left, answerList)
-            self.preorder(root.right, answerList)
-
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        answerList = []
-        self.preorder(root, answerList)
-        return answerList
+        if root is None: return []
+        return [root.val] + self.preorderTraversal(root.left) +\
+                self.preorderTraversal(root.right) 
