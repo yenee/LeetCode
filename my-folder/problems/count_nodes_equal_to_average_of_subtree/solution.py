@@ -5,22 +5,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def check(self, root, answerList):
-        if root == None : 
-            return answerList
-        else :
-            self.check(root.left, answerList)
-            self.check(root.right, answerList)
-            answerList.append(root.val)
-        return answerList
+    def __init__(self):
+        self.count = 0
 
+    def check(self, root):
+        if root == None : 
+            return 0, 0
+        else :
+            total_l, num_l = self.check(root.left)
+            total_r, num_r = self.check(root.right)
+            total = total_l + total_r + root.val
+            num = num_l + num_r + 1
+            if total // num == root.val:
+                self.count += 1
+        return total, num
+    
     def averageOfSubtree(self, root: TreeNode) -> int:
-        count = 0
-        if root is None:
-            return count
-        answerList = self.check(root, [])
-        if sum(answerList) // len(answerList) == root.val:
-            count += 1
-        count += self.averageOfSubtree(root.left)
-        count += self.averageOfSubtree(root.right)
-        return count
+        self.check(root)
+        return self.count
